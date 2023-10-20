@@ -1,4 +1,4 @@
-let GLOBAL_CONTENT: string
+let CONTENT_LINES: string[]
 const TERMS_PATH = `${process.cwd()}/resources/docs`
 
 import type { Metadata, ResolvingMetadata } from 'next'
@@ -30,7 +30,7 @@ export default function TermPage({ params }: Props) {
         'utf8',
     )
 
-    GLOBAL_CONTENT = markdown_content
+    CONTENT_LINES = markdown_content.split('\n')
 
     return (
         <article>
@@ -50,15 +50,13 @@ export async function generateMetadata(
     const parentMetadata = await parent
 
     const titleContent = clearMdSyntax(
-        GLOBAL_CONTENT.split('\n').find(line => line.startsWith('# ')),
+        CONTENT_LINES.find(line => line.startsWith('# '))?.slice(2),
     )
 
-    const title = `${titleContent} — ${parentMetadata.title}`
+    const title = `${titleContent} — ${parentMetadata.title?.absolute}`
     const description =
         clearMdSyntax(
-            GLOBAL_CONTENT.split('\n')
-                .find(line => line.startsWith('1. '))
-                ?.slice(7),
+            CONTENT_LINES.find(line => line.startsWith('1. '))?.slice(7),
         ) ||
         parentMetadata.description ||
         undefined
