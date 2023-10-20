@@ -1,1 +1,3 @@
-# sensasi-dictionary
+# Sensasi Dictionary
+
+> `Work in progress`
