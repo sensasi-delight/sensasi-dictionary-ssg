@@ -4,8 +4,10 @@ import { useEffect, useState } from 'react'
 import NextLink from 'next/link'
 import { usePathname, useParams } from 'next/navigation'
 import Link from '@mui/material/Link'
+import getBasePath from '@/utils/getBasePath'
 
 let tempTermSlugs: string[]
+const BASE_PATH = getBasePath() ? getBasePath() + '/' : ''
 
 export default function LastVisitTermList() {
     const pathname = usePathname()
@@ -15,7 +17,7 @@ export default function LastVisitTermList() {
 
     useEffect(() => {
         const lastVisitedTermPaths = localStorage.getItem(
-            'lastVisitedTermPaths',
+            BASE_PATH + 'lastVisitedTermPaths',
         )
 
         tempTermSlugs = lastVisitedTermPaths
@@ -40,7 +42,7 @@ export default function LastVisitTermList() {
         tempTermSlugs.unshift(slug.toString())
 
         localStorage.setItem(
-            'lastVisitedTermPaths',
+            BASE_PATH + 'lastVisitedTermPaths',
             JSON.stringify(tempTermSlugs),
         )
         return setTermSlugs(tempTermSlugs)
