@@ -1,0 +1,1 @@
+# sensasi-dictionary
