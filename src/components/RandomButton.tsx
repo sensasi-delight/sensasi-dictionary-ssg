@@ -14,8 +14,8 @@ export default function RandomButton() {
         document.body.style.cursor = 'wait'
 
         if (tempPaths === undefined) {
-            tempPaths = await fetch(`${getBasePath()}/term-paths.json`).then(res =>
-                res.json(),
+            tempPaths = await fetch(`${getBasePath()}/term-paths.json`).then(
+                res => res.json(),
             )
         }
 
