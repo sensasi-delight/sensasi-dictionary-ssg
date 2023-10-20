@@ -1,3 +1,5 @@
 export default function getBasePath() {
-    return process.env.BASE_URL?.split('/').slice(3).join('/')
+    const BASE_PATH = process.env.BASE_URL?.split('/').slice(3).join('/')
+
+    return BASE_PATH ? `/${BASE_PATH}` : ''
 }

@@ -67,7 +67,7 @@ export async function generateMetadata(
         description: description,
         openGraph: {
             ...parentMetadata.openGraph,
-            url: `${getBasePath() ?? ''}/terms/${slug}`,
+            url: `${getBasePath()}/terms/${slug}`,
             title: title,
             description: description,
         },
