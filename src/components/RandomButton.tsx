@@ -1,6 +1,6 @@
 'use client'
 
-import { Link } from '@mui/material'
+import Link from '@mui/material/Link'
 import { useRouter, useParams } from 'next/navigation'
 
 let tempPaths: string[]
@@ -10,9 +10,10 @@ export default function RandomButton() {
     const { slug } = useParams()
 
     const handleClick = async () => {
+        document.body.style.cursor = 'wait'
+
         if (tempPaths === undefined) {
-            document.body.style.cursor = 'wait'
-            tempPaths = await fetch('/term-paths.json').then(res => res.json())
+            tempPaths = await fetch(`/term-paths.json`).then(res => res.json())
         }
 
         let randomPath = slug
@@ -26,7 +27,12 @@ export default function RandomButton() {
     }
 
     return (
-        <Link component="button" onClick={handleClick}>
+        <Link
+            component="button"
+            sx={{
+                textAlign: 'unset',
+            }}
+            onClick={handleClick}>
             Tampilkan kata acak!
         </Link>
     )
