@@ -9,8 +9,8 @@ import remarkGfm from 'remark-gfm'
 
 import reactMarkdownComponents from '@/components/reactMarkdownComponents'
 
-import getDictInfo from '@/utils/getDictInfo'
 import getTermPaths from '@/utils/getTermPaths'
+import clearMdSyntax from '@/utils/clearMdSyntax'
 
 type Props = {
     params: { slug: string }
@@ -44,37 +44,40 @@ export default function TermPage({ params }: Props) {
 }
 
 export async function generateMetadata(
-    { params: { slug } }: Props,
+    _: Props,
     parent: ResolvingMetadata,
 ): Promise<Metadata> {
-    const titleContent =
-        (
-            GLOBAL_CONTENT.split('\n').find(line => line.startsWith('# ')) || ''
-        ).slice(2) || slug
-
-    const title = `${titleContent} — ${getDictInfo().name}`
-    const description =
-        GLOBAL_CONTENT.split('\n')
-            .find(line => line.startsWith('1. '))
-            ?.slice(7) || ''.replace(/\n/g, ' ')
-
     const parentMetadata = await parent
 
+    const titleContent = clearMdSyntax(
+        GLOBAL_CONTENT.split('\n').find(line => line.startsWith('# ')),
+    )
+
+    const title = `${titleContent} — ${parentMetadata.title}`
+    const description =
+        clearMdSyntax(
+            GLOBAL_CONTENT.split('\n')
+                .find(line => line.startsWith('1. '))
+                ?.slice(7),
+        ) ||
+        parentMetadata.description ||
+        undefined
+
     return {
-        ...parentMetadata,
         title: title,
         description: description,
-        // @ts-ignore
         openGraph: {
             ...parentMetadata.openGraph,
+            // TODO: accomodate basePath
+            // url: parentMetadata.openGraph?.url + `/terms/${slug}`,
+            url: undefined,
             title: title,
             description: description,
         },
-        // @ts-ignore
         twitter: {
-            ...parentMetadata.twitter,
             title: title,
             description: description,
+            images: parentMetadata.twitter?.images,
         },
     }
 }

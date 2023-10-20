@@ -12,19 +12,21 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Footer from '@/components/Footer'
 import getDictInfo from '@/utils/getDictInfo'
 import SearchBar from '@/components/SearchBar'
+import clearMdSyntax from '@/utils/clearMdSyntax'
 
 const { description, name, logoUrl } = getDictInfo()
-const strDesc = description.replaceAll(/[*_]/g, '')
+const titleMeta = clearMdSyntax(name)
+const strDescMeta = clearMdSyntax(description)
 
 export const metadata: Metadata = {
-    title: name,
-    description: strDesc,
+    title: titleMeta,
+    description: strDescMeta,
     openGraph: {
         type: 'website',
         locale: 'id_ID',
-        siteName: name,
-        title: name,
-        description: strDesc,
+        siteName: titleMeta,
+        title: titleMeta,
+        description: strDescMeta,
         images: [
             {
                 url: logoUrl ?? '',
@@ -33,8 +35,9 @@ export const metadata: Metadata = {
         ],
     },
     twitter: {
-        title: name,
-        description: strDesc,
+        title: titleMeta,
+        description: strDescMeta,
+        creator: '@sensasi_delight',
         images: [
             {
                 url: logoUrl ?? '',
