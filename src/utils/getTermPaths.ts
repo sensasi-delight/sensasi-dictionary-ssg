@@ -1,14 +1,14 @@
 import fs from 'fs'
 
 export default function getTermPaths(): string[] {
-    const termsPath = `${process.cwd()}/resources/docs`
+    const baseMdsPath = `${process.cwd()}/../`
 
     return fs
-        .readdirSync(termsPath)
+        .readdirSync(baseMdsPath)
         .filter(file => file.length === 1)
         .map(letterPath =>
             fs
-                .readdirSync(`${termsPath}/${letterPath}`)
+                .readdirSync(`${baseMdsPath}/${letterPath}`)
                 .filter(fileName => fileName.endsWith('.md'))
                 .map(fileName => fileName.replace(/\.md$/, '')),
         )

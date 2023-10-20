@@ -5,10 +5,9 @@ import remarkGfm from 'remark-gfm'
 
 import reactMarkdownComponents from '@/components/reactMarkdownComponents'
 
-const README_PATH = `${process.cwd()}/resources/docs/README.md`
-
 export default function Home() {
-    const content = fs.readFileSync(README_PATH, 'utf8')
+    const readmePath = `${process.cwd()}/../README.md`
+    const content = fs.readFileSync(readmePath, 'utf8')
     const contentWithoutComments = content.replace(/<!--[\s\S]*?-->/g, '')
 
     return (

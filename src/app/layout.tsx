@@ -18,7 +18,10 @@ const { description, name, logoUrl } = getDictInfo()
 const titleMeta = clearMdSyntax(name)
 const strDescMeta = clearMdSyntax(description)
 
+const BASE_URL = process.env.BASE_URL
+
 export const metadata: Metadata = {
+    metadataBase: BASE_URL ? new URL(BASE_URL) : undefined,
     title: titleMeta,
     description: strDescMeta,
     openGraph: {

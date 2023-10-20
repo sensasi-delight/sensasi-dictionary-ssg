@@ -1,5 +1,5 @@
 let CONTENT_LINES: string[]
-const TERMS_PATH = `${process.cwd()}/resources/docs`
+const TERMS_PATH = `${process.cwd()}/../`
 
 import type { Metadata, ResolvingMetadata } from 'next'
 
@@ -9,8 +9,9 @@ import remarkGfm from 'remark-gfm'
 
 import reactMarkdownComponents from '@/components/reactMarkdownComponents'
 
-import getTermPaths from '@/utils/getTermPaths'
 import clearMdSyntax from '@/utils/clearMdSyntax'
+import getBasePath from '@/utils/getBasePath'
+import getTermPaths from '@/utils/getTermPaths'
 
 type Props = {
     params: { slug: string }
@@ -44,7 +45,7 @@ export default function TermPage({ params }: Props) {
 }
 
 export async function generateMetadata(
-    _: Props,
+    { params: { slug } }: Props,
     parent: ResolvingMetadata,
 ): Promise<Metadata> {
     const parentMetadata = await parent
@@ -66,9 +67,7 @@ export async function generateMetadata(
         description: description,
         openGraph: {
             ...parentMetadata.openGraph,
-            // TODO: accomodate basePath
-            // url: parentMetadata.openGraph?.url + `/terms/${slug}`,
-            url: undefined,
+            url: `${getBasePath() ?? ''}/terms/${slug}`,
             title: title,
             description: description,
         },

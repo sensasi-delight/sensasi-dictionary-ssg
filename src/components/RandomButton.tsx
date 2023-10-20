@@ -5,7 +5,7 @@ import Link from '@mui/material/Link'
 import { useRouter, useParams } from 'next/navigation'
 
 let tempPaths: string[]
-const basePath = getBasePath()
+const BASE_PATH = getBasePath() ?? ''
 
 export default function RandomButton() {
     const router = useRouter()
@@ -15,7 +15,7 @@ export default function RandomButton() {
         document.body.style.cursor = 'wait'
 
         if (tempPaths === undefined) {
-            tempPaths = await fetch(`${basePath}/term-paths.json`).then(res =>
+            tempPaths = await fetch(`${BASE_PATH}/term-paths.json`).then(res =>
                 res.json(),
             )
         }
