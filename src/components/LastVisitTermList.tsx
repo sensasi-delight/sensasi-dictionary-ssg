@@ -7,7 +7,7 @@ import Link from '@mui/material/Link'
 import getBasePath from '@/utils/getBasePath'
 
 let tempTermSlugs: string[]
-const BASE_PATH = getBasePath() ? getBasePath() + '/' : ''
+const BASE_PATH = getBasePath() ? getBasePath().slice(1) + '/' : ''
 
 export default function LastVisitTermList() {
     const pathname = usePathname()

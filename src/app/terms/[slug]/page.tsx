@@ -10,7 +10,7 @@ import remarkGfm from 'remark-gfm'
 import reactMarkdownComponents from '@/components/reactMarkdownComponents'
 
 import clearMdSyntax from '@/utils/clearMdSyntax'
-import getBasePath from '@/utils/getBasePath'
+import getBaseUrl from '@/utils/getBaseUrl'
 import getTermPaths from '@/utils/getTermPaths'
 
 type Props = {
@@ -67,7 +67,7 @@ export async function generateMetadata(
         description: description,
         openGraph: {
             ...parentMetadata.openGraph,
-            url: `${getBasePath()}/terms/${slug}`,
+            url: `${getBaseUrl()}/terms/${slug}`,
             title: title,
             description: description,
         },
