@@ -13,29 +13,31 @@ import Footer from '@/components/Footer'
 import getDictInfo from '@/utils/getDictInfo'
 import SearchBar from '@/components/SearchBar'
 
+const { description, name, logoUrl } = getDictInfo()
+const strDesc = description.replaceAll(/[*_]/g, '')
+
 export const metadata: Metadata = {
-    metadataBase: new URL('https://acme.com'),
-    title: getDictInfo().name,
-    description: getDictInfo().description,
+    title: name,
+    description: strDesc,
     openGraph: {
         type: 'website',
         locale: 'id_ID',
-        siteName: getDictInfo().name,
-        title: getDictInfo().name,
-        description: getDictInfo().description,
+        siteName: name,
+        title: name,
+        description: strDesc,
         images: [
             {
-                url: 'logo.png',
+                url: logoUrl ?? '',
                 alt: 'logo',
             },
         ],
     },
     twitter: {
-        title: getDictInfo().name,
-        description: getDictInfo().description,
+        title: name,
+        description: strDesc,
         images: [
             {
-                url: '/logo.png',
+                url: logoUrl ?? '',
                 alt: 'logo',
             },
         ],
@@ -50,7 +52,7 @@ export default function RootLayout({
     return (
         <html lang="id">
             <head>
-                <link rel="icon" href="/logo.png" sizes="any" />
+                <link rel="icon" href={logoUrl} sizes="any" />
             </head>
 
             <CssBaseline />
