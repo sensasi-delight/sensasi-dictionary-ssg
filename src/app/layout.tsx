@@ -12,15 +12,18 @@ import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import Footer from '@/components/Footer'
-import getDictInfo from '@/utils/getDictInfo'
+
 import SearchBar from '@/components/SearchBar'
+
 import clearMdSyntax from '@/utils/clearMdSyntax'
+import getBaseUrl from '@/utils/getBaseUrl'
+import getDictInfo from '@/utils/getDictInfo'
 
 const { description, name, logoUrl } = getDictInfo()
 const titleMeta = clearMdSyntax(name)
 const strDescMeta = clearMdSyntax(description)
 
-const BASE_URL = process.env.BASE_URL
+const BASE_URL = getBaseUrl()
 
 export const metadata: Metadata = {
     metadataBase: BASE_URL ? new URL(BASE_URL) : undefined,
@@ -61,7 +64,7 @@ export default function RootLayout({
         <html lang="id">
             <head>
                 <link rel="icon" href={logoUrl} sizes="any" />
-                <Script src="script.js" />
+                <Script src={`${BASE_URL}/script.js`} />
             </head>
 
             <CssBaseline />
