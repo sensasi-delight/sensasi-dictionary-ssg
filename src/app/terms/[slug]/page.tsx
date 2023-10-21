@@ -54,26 +54,24 @@ export async function generateMetadata(
         CONTENT_LINES.find(line => line.startsWith('# '))?.slice(2),
     )
 
-    const title = `${titleContent} — ${parentMetadata.title?.absolute}`
-    const description =
-        clearMdSyntax(
-            CONTENT_LINES.find(line => line.startsWith('1. '))?.slice(7),
-        ) ||
+    const metaTitle = `${titleContent} — ${parentMetadata.title?.absolute}`
+    const metaDesc =
+        clearMdSyntax(CONTENT_LINES.find(line => line.startsWith('1. '))) ||
         parentMetadata.description ||
         undefined
 
     return {
-        title: title,
-        description: description,
+        title: metaTitle,
+        description: metaDesc,
         openGraph: {
             ...parentMetadata.openGraph,
             url: `${getBaseUrl()}/terms/${slug}`,
-            title: title,
-            description: description,
+            title: metaTitle,
+            description: metaDesc,
         },
         twitter: {
-            title: title,
-            description: description,
+            title: metaTitle,
+            description: metaDesc,
             images: parentMetadata.twitter?.images,
         },
     }

@@ -1,6 +1,9 @@
 export default function clearMdSyntax(strMd?: string) {
     if (!strMd) return undefined
 
+    // Menghapus nomor di depan, kata-kata italic, dan [^n]
+    strMd = strMd.replace(/^\d+\.\s+|_([^_]+)_\s+|\[\^\d+\]/g, '')
+
     // Menghapus tautan
     strMd = strMd.replace(/\[([^\]]+)\]\(.*?\)/g, '$1')
 
@@ -13,5 +16,11 @@ export default function clearMdSyntax(strMd?: string) {
     // Menghapus kode dalam tanda kait
     strMd = strMd.replace(/`([^`]+)`/g, '$1')
 
-    return strMd
+    // Menghapus spasi ganda
+    strMd = strMd.replace(/\s{2,}/g, ' ')
+
+    // Menghapus spasi sebelum titik
+    strMd = strMd.replace(/\s+\./g, '.')
+
+    return strMd.trim()
 }
