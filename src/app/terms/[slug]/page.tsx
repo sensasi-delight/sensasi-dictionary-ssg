@@ -26,19 +26,24 @@ export async function generateStaticParams() {
 export default function TermPage({ params }: Props) {
     const slug = params.slug.toLocaleLowerCase()
 
-    const markdown_content = fs.readFileSync(
+    const markdownContent = fs.readFileSync(
         `${TERMS_PATH}/${slug.charAt(0)}/${slug}.md`,
         'utf8',
     )
 
-    CONTENT_LINES = markdown_content.split('\n')
+    const contentWithoutComments = markdownContent.replace(
+        /<!--[\s\S]*?-->/g,
+        '',
+    )
+
+    CONTENT_LINES = contentWithoutComments.split('\n')
 
     return (
         <article>
             <ReactMarkdown
                 remarkPlugins={[[remarkGfm]]}
                 components={reactMarkdownComponents}>
-                {markdown_content}
+                {contentWithoutComments}
             </ReactMarkdown>
         </article>
     )
