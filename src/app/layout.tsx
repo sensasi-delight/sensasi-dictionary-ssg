@@ -5,6 +5,8 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
+import Script from 'next/script'
+
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
@@ -59,6 +61,7 @@ export default function RootLayout({
         <html lang="id">
             <head>
                 <link rel="icon" href={logoUrl} sizes="any" />
+                <Script src="script.js" />
             </head>
 
             <CssBaseline />
