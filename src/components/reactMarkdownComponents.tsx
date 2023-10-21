@@ -10,54 +10,84 @@ import OpenInNewIcon from '@mui/icons-material/OpenInNew'
 
 import WordClass from '@/components/WordClass'
 import isWordClass from '@/components/WordClass/isWordClass'
+import isExternalUrl from '@/utils/isExternalUrl'
 
 const reactMarkdownComponents: Partial<Components> = {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    h1: ({ node, ...rest }) => (
-        <Typography
-            mt={4}
-            mb={2}
-            variant="h2"
-            component="h1"
-            {...(rest as TypographyProps)}
-        />
-    ),
+    h1: props => {
+        const newProps = JSON.parse(JSON.stringify(props))
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    h2: ({ node, ...rest }) => {
-        if (rest.children === 'Footnotes') {
-            rest.children = 'Catatan Kaki'
+        delete newProps.node
+
+        return (
+            <Typography
+                id={(newProps.children as string)
+                    .toLowerCase()
+                    .replace(/\s/g, '-')}
+                mt={4}
+                mb={2}
+                variant="h2"
+                component="h1"
+                {...(newProps as TypographyProps)}
+            />
+        )
+    },
+
+    h2: props => {
+        const newProps = JSON.parse(JSON.stringify(props))
+
+        delete newProps.node
+
+        if (newProps.children === 'Footnotes') {
+            newProps.children = 'Catatan Kaki'
         }
 
         return (
             <Typography
+                id={(newProps.children as string)
+                    .toLowerCase()
+                    .replace(/\s/g, '-')}
                 mt={4}
                 mb={2}
                 variant="h5"
                 component="h2"
-                {...(rest as TypographyProps)}
+                {...(newProps as TypographyProps)}
             />
         )
     },
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    em: ({ node, ...rest }) => {
-        if (isWordClass((rest.children || '') as string)) {
-            return <WordClass {...rest} />
-        }
 
-        return <i {...rest} />
+    code: props => {
+        const newProps = JSON.parse(JSON.stringify(props))
+
+        delete newProps.node
+
+        return (
+            <Typography
+                component="code"
+                sx={{
+                    fontFamily: 'monospace',
+                    fontSize: '0.875rem',
+                    px: 0.5,
+                    py: 0.25,
+                    borderRadius: 1,
+                    bgcolor: 'grey.300',
+                }}
+                {...(newProps as TypographyProps)}
+            />
+        )
     },
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    a: ({ node, href, children }) => {
-        let isExternal = false
+    em: props => {
+        delete props.node
 
-        try {
-            new URL(href as string)
-            isExternal = true
-        } catch (error) {
-            isExternal = false
+        if (isWordClass((props.children || '') as string)) {
+            return <WordClass {...props} />
         }
+
+        return <i {...props} />
+    },
+
+    a: ({ href, children }) => {
+        const isExternal = isExternalUrl(href as string)
 
         return (
             <Link
