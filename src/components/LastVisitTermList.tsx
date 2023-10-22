@@ -29,6 +29,7 @@ export default function LastVisitTermList() {
 
     useEffect(() => {
         if (
+            slug !== undefined &&
             tempTermSlugs !== undefined &&
             pathname.includes('/terms/') &&
             !tempTermSlugs.includes(slug.toString())

@@ -17,7 +17,10 @@ type Props = {
     params: { slug: string }
 }
 
-export async function generateStaticParams() {
+// Error when slug not found instead of 404
+// https://github.com/vercel/next.js/issues/54393
+
+export function generateStaticParams() {
     return getTermPaths().map((path: string) => ({
         slug: path,
     }))

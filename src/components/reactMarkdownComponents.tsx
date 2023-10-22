@@ -15,7 +15,6 @@ import isExternalUrl from '@/utils/isExternalUrl'
 const reactMarkdownComponents: Partial<Components> = {
     h1: props => {
         const newProps = JSON.parse(JSON.stringify(props))
-
         delete newProps.node
 
         return (
@@ -34,7 +33,6 @@ const reactMarkdownComponents: Partial<Components> = {
 
     h2: props => {
         const newProps = JSON.parse(JSON.stringify(props))
-
         delete newProps.node
 
         if (newProps.children === 'Footnotes') {
@@ -57,7 +55,6 @@ const reactMarkdownComponents: Partial<Components> = {
 
     code: props => {
         const newProps = JSON.parse(JSON.stringify(props))
-
         delete newProps.node
 
         return (
@@ -77,13 +74,14 @@ const reactMarkdownComponents: Partial<Components> = {
     },
 
     em: props => {
-        delete props.node
+        const newProps = JSON.parse(JSON.stringify(props))
+        delete newProps.node
 
-        if (isWordClass((props.children || '') as string)) {
-            return <WordClass {...props} />
+        if (isWordClass((newProps.children || '') as string)) {
+            return <WordClass {...newProps} />
         }
 
-        return <i {...props} />
+        return <i {...newProps} />
     },
 
     a: ({ href, children }) => {
