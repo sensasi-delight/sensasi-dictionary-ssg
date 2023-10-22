@@ -44,7 +44,7 @@ export default function TermPage({ params }: Props) {
     return (
         <article>
             <ReactMarkdown
-                remarkPlugins={[[remarkGfm]]}
+                remarkPlugins={[remarkGfm]}
                 components={reactMarkdownComponents}>
                 {contentWithoutComments}
             </ReactMarkdown>

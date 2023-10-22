@@ -3,6 +3,7 @@ import type { TypographyProps } from '@mui/material/Typography'
 
 import NextLink from 'next/link'
 
+import Box from '@mui/material/Box'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 
@@ -53,22 +54,42 @@ const reactMarkdownComponents: Partial<Components> = {
         )
     },
 
+    pre: props => {
+        const newProps = JSON.parse(JSON.stringify(props))
+        delete newProps.node
+
+        const { children, ...rest } = newProps
+
+        return (
+            <Typography
+                component="pre"
+                sx={{
+                    fontSize: '0.875rem',
+                    p: 1,
+                    borderRadius: 1,
+                    backgroundColor: 'rgba(128, 128, 128, 0.15)',
+                }}
+                {...(rest as TypographyProps)}>
+                <code {...children.props} />
+            </Typography>
+        )
+    },
+
     code: props => {
         const newProps = JSON.parse(JSON.stringify(props))
         delete newProps.node
 
         return (
-            <Typography
+            <Box
                 component="code"
                 sx={{
-                    fontFamily: 'monospace',
                     fontSize: '0.875rem',
-                    px: 0.5,
+                    px: 0.8,
                     py: 0.25,
                     borderRadius: 1,
-                    bgcolor: 'grey.300',
+                    backgroundColor: 'rgba(128, 128, 128, 0.15)',
                 }}
-                {...(newProps as TypographyProps)}
+                {...newProps}
             />
         )
     },

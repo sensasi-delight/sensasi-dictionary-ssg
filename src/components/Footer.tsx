@@ -15,11 +15,15 @@ import reactMarkdownComponents from './reactMarkdownComponents'
 
 import GitHubIcon from '@mui/icons-material/GitHub'
 
+import dynamic from 'next/dynamic'
+const DarkModeSwitch = dynamic(
+    () => import('@/clientComponents/DarkModeSwitch'),
+    { ssr: false },
+)
+
 import appInfo from '@/../package.json'
-// import getTermPaths from '@/utils/getTermPaths'
 
 const { name: dictName, description: dictDesc, logoUrl } = getDictInfo()
-// const termPaths = getTermPaths()
 
 export default function Footer() {
     return (
@@ -123,6 +127,8 @@ export default function Footer() {
                             </li>
                         </ul>
                     </nav>
+
+                    <DarkModeSwitch />
                 </Grid>
 
                 <Grid item xs={6} sm={3}>
@@ -167,9 +173,3 @@ export default function Footer() {
         </>
     )
 }
-
-// export function generateStaticParams() {
-//     return {
-//         paths: getTermPaths(),
-//     }
-// }

@@ -7,13 +7,15 @@ import '@fontsource/roboto/700.css'
 
 import Script from 'next/script'
 
+import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/styles'
+
 import Box from '@mui/material/Box'
 import Container from '@mui/material/Container'
 import CssBaseline from '@mui/material/CssBaseline'
 
 import Footer from '@/components/Footer'
-
 import SearchBar from '@/components/SearchBar'
+import InitColorSchemeScript from '@/clientComponents/InitColorSchemeScript'
 
 import clearMdSyntax from '@/utils/clearMdSyntax'
 import getBaseUrl from '@/utils/getBaseUrl'
@@ -24,6 +26,38 @@ const titleMeta = clearMdSyntax(name)
 const strDescMeta = clearMdSyntax(description)
 
 const BASE_URL = getBaseUrl()
+
+export default function RootLayout({
+    children,
+}: {
+    children: React.ReactNode
+}) {
+    return (
+        <html lang="id" suppressHydrationWarning>
+            <head>
+                <link rel="icon" href={logoUrl} sizes="any" />
+                <Script src={`${BASE_URL}/script.js`} />
+                <InitColorSchemeScript />
+            </head>
+
+            <CssVarsProvider>
+                <CssBaseline />
+                <Container
+                    maxWidth="md"
+                    component="body"
+                    sx={{
+                        pt: 2,
+                    }}>
+                    <SearchBar />
+                    <Box component="main" px={3} mt={4}>
+                        {children}
+                    </Box>
+                    <Footer />
+                </Container>
+            </CssVarsProvider>
+        </html>
+    )
+}
 
 export const metadata: Metadata = {
     metadataBase: BASE_URL ? new URL(BASE_URL) : undefined,
@@ -53,34 +87,4 @@ export const metadata: Metadata = {
             },
         ],
     },
-}
-
-export default function RootLayout({
-    children,
-}: {
-    children: React.ReactNode
-}) {
-    return (
-        <html lang="id">
-            <head>
-                <link rel="icon" href={logoUrl} sizes="any" />
-                <Script src={`${BASE_URL}/script.js`} />
-            </head>
-
-            <CssBaseline />
-
-            <Container
-                maxWidth="md"
-                component="body"
-                sx={{
-                    pt: 2,
-                }}>
-                <SearchBar />
-                <Box component="main" px={3} mt={4}>
-                    {children}
-                </Box>
-                <Footer />
-            </Container>
-        </html>
-    )
 }
